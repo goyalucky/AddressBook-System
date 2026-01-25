@@ -46,5 +46,20 @@ namespace AddressBookSystem
             }
             Console.WriteLine("Contact not found.");
         }
+
+         // UC4: Delete contact using name
+        public void DeleteContact(string firstName, string lastName)
+        {
+            for (int i = 0; i < contacts.Count; i++)
+            {
+                if (contacts[i].FirstName == firstName && contacts[i].LastName == lastName)
+                {
+                    contacts.RemoveAt(i);
+                    Console.WriteLine("Contact deleted successfully.");
+                    return;
+                }
+            }
+            Console.WriteLine("Contact not found.");
+        }
     }
 }
