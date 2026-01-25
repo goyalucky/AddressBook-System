@@ -62,7 +62,7 @@ namespace AddressBookSystem
                     addMoreBooks = false;
             }
 
-            // UC8: Search by City or State
+            // UC8: Search Logic
             Console.WriteLine("\n--- UC8: Search Logic ---");
             Console.Write("Search person by City or State (C/S): ");
             string searchChoice = Console.ReadLine().ToUpper();
@@ -80,7 +80,7 @@ namespace AddressBookSystem
                 Search(addressBookMap, state, false);
             }
 
-            // UC9: View Persons by City or State (Dictionary View)
+            // UC9: View Logic
             Console.WriteLine("\n--- UC9: View by City or State (Dictionary Library) ---");
             Console.Write("View all persons grouped by City or State? (C/S): ");
             string viewChoice = Console.ReadLine().ToUpper();
@@ -89,24 +89,26 @@ namespace AddressBookSystem
                 ViewByLocation(viewChoice == "C");
             }
 
+            // UC 10: Count Logic
+            Console.WriteLine("\n--- UC 10: Count by City or State ---");
+            DisplayCountByLocation();
+
             Console.WriteLine("\nProgram Ended.");
         }
 
         // UC9: Helper method to maintain Dictionaries
         static void MaintainLocationDictionaries(Contact contact)
         {
-            // Maintain City Map
             if (!cityPersonsMap.ContainsKey(contact.City))
                 cityPersonsMap[contact.City] = new List<Contact>();
             cityPersonsMap[contact.City].Add(contact);
 
-            // Maintain State Map
             if (!statePersonsMap.ContainsKey(contact.State))
                 statePersonsMap[contact.State] = new List<Contact>();
             statePersonsMap[contact.State].Add(contact);
         }
 
-        // UC9: View Logic using Dictionaries
+        // UC9: View Logic
         static void ViewByLocation(bool byCity)
         {
             var map = byCity ? cityPersonsMap : statePersonsMap;
@@ -117,6 +119,22 @@ namespace AddressBookSystem
                 {
                     Console.WriteLine($"- {contact.FirstName} {contact.LastName}");
                 }
+            }
+        }
+
+        // UC 10: Count Logic using Dictionary
+        static void DisplayCountByLocation()
+        {
+            Console.WriteLine("\nCounts by City:");
+            foreach (var entry in cityPersonsMap)
+            {
+                Console.WriteLine($"{entry.Key}: {entry.Value.Count} person(s)");
+            }
+
+            Console.WriteLine("\nCounts by State:");
+            foreach (var entry in statePersonsMap)
+            {
+                Console.WriteLine($"{entry.Key}: {entry.Value.Count} person(s)");
             }
         }
 
