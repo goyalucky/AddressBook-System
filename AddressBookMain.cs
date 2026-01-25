@@ -8,28 +8,39 @@ namespace AddressBookSystem
         {
             Console.WriteLine("Welcome to Address Book Program");
 
-            // UC1: Ability to create a contact by providing values
-            Contact contact = new Contact
-            {
-                FirstName = "Lucky",
-                LastName  = "Goyal",
-                Address   = "Pushpanjali Upvan Near Jaigurudev",
-                City      = "Mathura",
-                State     = "Uttar Pradesh",
-                Zip       = 281001,
-                Phone     = "99976*****",
-                Email     = "lg@gmail.com"
-            };
+            // Creating AddressBook object
+            AddressBook addressBook = new AddressBook();
 
-            // Display contact details
-            Console.WriteLine("\nContact Created Successfully");
-            Console.WriteLine($"Name    : {contact.FirstName} {contact.LastName}");
-            Console.WriteLine($"Address : {contact.Address}");
-            Console.WriteLine($"City    : {contact.City}");
-            Console.WriteLine($"State   : {contact.State}");
-            Console.WriteLine($"Zip     : {contact.Zip}");
-            Console.WriteLine($"Phone   : {contact.Phone}");
-            Console.WriteLine($"Email   : {contact.Email}");
+            // Creating Contact object
+            Contact contact = new Contact();
+
+            // UC2: Adding new contact using console input
+            Console.Write("Enter First Name: ");
+            contact.FirstName = Console.ReadLine();
+
+            Console.Write("Enter Last Name: ");
+            contact.LastName = Console.ReadLine();
+
+            Console.Write("Enter Address: ");
+            contact.Address = Console.ReadLine();
+
+            Console.Write("Enter City: ");
+            contact.City = Console.ReadLine();
+
+            Console.Write("Enter State: ");
+            contact.State = Console.ReadLine();
+
+            Console.Write("Enter Zip: ");
+            contact.Zip = Convert.ToInt32(Console.ReadLine());
+
+            Console.Write("Enter Phone Number: ");
+            contact.Phone = Console.ReadLine();
+
+            Console.Write("Enter Email: ");
+            contact.Email = Console.ReadLine();
+
+            // Adding contact to Address Book
+            addressBook.AddContact(contact);
         }
     }
 }
