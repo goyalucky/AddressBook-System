@@ -4,7 +4,7 @@ using System;
 
 namespace AddressBookSystem
 {
-    // UC1:  Model class representing a Contact Person
+    // Model class representing a Contact Person
     public class Contact
     {
         public string FirstName { get; set; }
