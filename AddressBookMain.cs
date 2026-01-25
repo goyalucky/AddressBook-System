@@ -41,6 +41,15 @@ namespace AddressBookSystem
 
             // Adding contact to Address Book
             addressBook.AddContact(contact);
+
+            // UC3: Edit existing contact
+            Console.Write("\nEnter First Name to Edit: ");
+            string firstName = Console.ReadLine();
+
+            Console.Write("Enter Last Name to Edit: ");
+            string lastName = Console.ReadLine();
+            
+            addressBook.EditContact(firstName, lastName);
         }
     }
 }
