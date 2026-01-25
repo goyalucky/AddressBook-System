@@ -5,13 +5,16 @@ namespace AddressBookSystem
 {
     public class AddressBookMain
     {
+        // UC9: Dictionaries to maintain Persons by City and State
+        public static Dictionary<string, List<Contact>> cityPersonsMap = new Dictionary<string, List<Contact>>();
+        public static Dictionary<string, List<Contact>> statePersonsMap = new Dictionary<string, List<Contact>>();
+
         public static void Main(string[] args)
         {
             Console.WriteLine("Welcome to Address Book System");
 
             // UC6: Multiple Address Books
-            Dictionary<string, AddressBook> addressBookMap =
-                new Dictionary<string, AddressBook>();
+            Dictionary<string, AddressBook> addressBookMap = new Dictionary<string, AddressBook>();
 
             bool addMoreBooks = true;
 
@@ -34,31 +37,20 @@ namespace AddressBookSystem
                 {
                     Contact contact = new Contact();
 
-                    Console.Write("Enter First Name: ");
-                    contact.FirstName = Console.ReadLine();
+                    Console.Write("Enter First Name: "); contact.FirstName = Console.ReadLine();
+                    Console.Write("Enter Last Name: "); contact.LastName = Console.ReadLine();
+                    Console.Write("Enter Address: "); contact.Address = Console.ReadLine();
+                    Console.Write("Enter City: "); contact.City = Console.ReadLine();
+                    Console.Write("Enter State: "); contact.State = Console.ReadLine();
+                    Console.Write("Enter Zip: "); contact.Zip = Convert.ToInt32(Console.ReadLine());
+                    Console.Write("Enter Phone: "); contact.Phone = Console.ReadLine();
+                    Console.Write("Enter Email: "); contact.Email = Console.ReadLine();
 
-                    Console.Write("Enter Last Name: ");
-                    contact.LastName = Console.ReadLine();
-
-                    Console.Write("Enter Address: ");
-                    contact.Address = Console.ReadLine();
-
-                    Console.Write("Enter City: ");
-                    contact.City = Console.ReadLine();
-
-                    Console.Write("Enter State: ");
-                    contact.State = Console.ReadLine();
-
-                    Console.Write("Enter Zip: ");
-                    contact.Zip = Convert.ToInt32(Console.ReadLine());
-
-                    Console.Write("Enter Phone: ");
-                    contact.Phone = Console.ReadLine();
-
-                    Console.Write("Enter Email: ");
-                    contact.Email = Console.ReadLine();
-
-                    addressBook.AddContact(contact);
+                    // UC7 & UC9 Logic: Only map to dictionaries if added successfully
+                    if (addressBook.AddContact(contact))
+                    {
+                        MaintainLocationDictionaries(contact);
+                    }
 
                     Console.Write("Add another contact? (Y/N): ");
                     if (Console.ReadLine().ToUpper() != "Y")
@@ -70,35 +62,69 @@ namespace AddressBookSystem
                     addMoreBooks = false;
             }
 
-            //  UC8: Search by City or State
-            Console.Write("\nSearch person by City or State (C/S): ");
-            string choice = Console.ReadLine().ToUpper();
+            // UC8: Search by City or State
+            Console.WriteLine("\n--- UC8: Search Logic ---");
+            Console.Write("Search person by City or State (C/S): ");
+            string searchChoice = Console.ReadLine().ToUpper();
 
-            if (choice == "C")
+            if (searchChoice == "C")
             {
                 Console.Write("Enter City: ");
                 string city = Console.ReadLine();
                 Search(addressBookMap, city, true);
             }
-            else if (choice == "S")
+            else if (searchChoice == "S")
             {
                 Console.Write("Enter State: ");
                 string state = Console.ReadLine();
                 Search(addressBookMap, state, false);
             }
 
+            // UC9: View Persons by City or State (Dictionary View)
+            Console.WriteLine("\n--- UC9: View by City or State (Dictionary Library) ---");
+            Console.Write("View all persons grouped by City or State? (C/S): ");
+            string viewChoice = Console.ReadLine().ToUpper();
+            if (viewChoice == "C" || viewChoice == "S")
+            {
+                ViewByLocation(viewChoice == "C");
+            }
+
             Console.WriteLine("\nProgram Ended.");
         }
 
+        // UC9: Helper method to maintain Dictionaries
+        static void MaintainLocationDictionaries(Contact contact)
+        {
+            // Maintain City Map
+            if (!cityPersonsMap.ContainsKey(contact.City))
+                cityPersonsMap[contact.City] = new List<Contact>();
+            cityPersonsMap[contact.City].Add(contact);
+
+            // Maintain State Map
+            if (!statePersonsMap.ContainsKey(contact.State))
+                statePersonsMap[contact.State] = new List<Contact>();
+            statePersonsMap[contact.State].Add(contact);
+        }
+
+        // UC9: View Logic using Dictionaries
+        static void ViewByLocation(bool byCity)
+        {
+            var map = byCity ? cityPersonsMap : statePersonsMap;
+            foreach (var entry in map)
+            {
+                Console.WriteLine($"\n{(byCity ? "City" : "State")}: {entry.Key}");
+                foreach (var contact in entry.Value)
+                {
+                    Console.WriteLine($"- {contact.FirstName} {contact.LastName}");
+                }
+            }
+        }
+
         // UC8 Search Logic
-        static void Search(
-            Dictionary<string, AddressBook> addressBookMap,
-            string value,
-            bool searchByCity)
+        static void Search(Dictionary<string, AddressBook> addressBookMap, string value, bool searchByCity)
         {
             Console.WriteLine("\nSearch Results:");
             bool found = false;
-
             foreach (var entry in addressBookMap)
             {
                 foreach (var contact in entry.Value.GetContacts())
@@ -106,16 +132,12 @@ namespace AddressBookSystem
                     if ((searchByCity && contact.City.Equals(value, StringComparison.OrdinalIgnoreCase)) ||
                         (!searchByCity && contact.State.Equals(value, StringComparison.OrdinalIgnoreCase)))
                     {
-                        Console.WriteLine(
-                            $"[{entry.Key}] {contact.FirstName} {contact.LastName} - " +
-                            $"{contact.City}, {contact.State}");
+                        Console.WriteLine($"[{entry.Key}] {contact.FirstName} {contact.LastName} - {contact.City}, {contact.State}");
                         found = true;
                     }
                 }
             }
-
-            if (!found)
-                Console.WriteLine("No matching records found.");
+            if (!found) Console.WriteLine("No matching records found.");
         }
     }
 }
