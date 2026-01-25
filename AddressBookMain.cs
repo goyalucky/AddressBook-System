@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 
 namespace AddressBookSystem
 {
@@ -8,14 +9,14 @@ namespace AddressBookSystem
         {
             Console.WriteLine("Welcome to Address Book Program");
 
-            // Creating AddressBook object
+            // Create AddressBook object
             AddressBook addressBook = new AddressBook();
 
-            // Creating Contact object
+            // Create Contact object
             Contact contact = new Contact();
 
-            // UC2: Adding new contact using console input
-            Console.Write("Enter First Name: ");
+            // UC2: Add New Contact
+            Console.Write("\nEnter First Name: ");
             contact.FirstName = Console.ReadLine();
 
             Console.Write("Enter Last Name: ");
@@ -39,17 +40,25 @@ namespace AddressBookSystem
             Console.Write("Enter Email: ");
             contact.Email = Console.ReadLine();
 
-            // Adding contact to Address Book
             addressBook.AddContact(contact);
 
-            // UC3: Edit existing contact
+            // UC3: Edit Existing Contact 
             Console.Write("\nEnter First Name to Edit: ");
-            string firstName = Console.ReadLine();
+            string editFirstName = Console.ReadLine();
 
             Console.Write("Enter Last Name to Edit: ");
-            string lastName = Console.ReadLine();
-            
-            addressBook.EditContact(firstName, lastName);
+            string editLastName = Console.ReadLine();
+
+            addressBook.EditContact(editFirstName, editLastName);
+
+            //UC4: Delete Contact 
+            Console.Write("\nEnter First Name to Delete: ");
+            string deleteFirstName = Console.ReadLine();
+
+            Console.Write("Enter Last Name to Delete: ");
+            string deleteLastName = Console.ReadLine();
+
+            addressBook.DeleteContact(deleteFirstName, deleteLastName);
         }
     }
 }
