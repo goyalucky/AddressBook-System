@@ -1,5 +1,3 @@
-// UC3: Ability to edit existing contact person using their name
-
 using System;
 using System.Collections.Generic;
 
