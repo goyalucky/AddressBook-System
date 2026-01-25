@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace AddressBookSystem
 {
@@ -6,69 +7,74 @@ namespace AddressBookSystem
     {
         public static void Main(string[] args)
         {
-            Console.WriteLine("Welcome to Address Book Program");
+            Console.WriteLine("Welcome to Address Book System");
 
-            AddressBook addressBook = new AddressBook();
-            bool addMore = true;
+            // UC6: Multiple Address Books
+            Dictionary<string, AddressBook> addressBookMap =
+                new Dictionary<string, AddressBook>();
 
-            // UC5: Add Multiple Contacts
-            while (addMore)
+            bool addMoreBooks = true;
+
+            while (addMoreBooks)
             {
-                Contact contact = new Contact();
+                Console.Write("\nEnter Address Book Name: ");
+                string bookName = Console.ReadLine();
 
-                Console.Write("\nEnter First Name: ");
-                contact.FirstName = Console.ReadLine();
+                if (addressBookMap.ContainsKey(bookName))
+                {
+                    Console.WriteLine("Address Book already exists!");
+                }
+                else
+                {
+                    AddressBook addressBook = new AddressBook();
+                    addressBookMap.Add(bookName, addressBook);
+                    Console.WriteLine("Address Book created successfully.");
 
-                Console.Write("Enter Last Name: ");
-                contact.LastName = Console.ReadLine();
+                    // UC5: Add Multiple Contacts
+                    bool addMoreContacts = true;
+                    while (addMoreContacts)
+                    {
+                        Contact contact = new Contact();
 
-                Console.Write("Enter Address: ");
-                contact.Address = Console.ReadLine();
+                        Console.Write("Enter First Name: ");
+                        contact.FirstName = Console.ReadLine();
 
-                Console.Write("Enter City: ");
-                contact.City = Console.ReadLine();
+                        Console.Write("Enter Last Name: ");
+                        contact.LastName = Console.ReadLine();
 
-                Console.Write("Enter State: ");
-                contact.State = Console.ReadLine();
+                        Console.Write("Enter Address: ");
+                        contact.Address = Console.ReadLine();
 
-                Console.Write("Enter Zip: ");
-                contact.Zip = Convert.ToInt32(Console.ReadLine());
+                        Console.Write("Enter City: ");
+                        contact.City = Console.ReadLine();
 
-                Console.Write("Enter Phone Number: ");
-                contact.Phone = Console.ReadLine();
+                        Console.Write("Enter State: ");
+                        contact.State = Console.ReadLine();
 
-                Console.Write("Enter Email: ");
-                contact.Email = Console.ReadLine();
+                        Console.Write("Enter Zip: ");
+                        contact.Zip = Convert.ToInt32(Console.ReadLine());
 
-                addressBook.AddContact(contact);
-                Console.WriteLine("Contact added successfully ✔");
+                        Console.Write("Enter Phone: ");
+                        contact.Phone = Console.ReadLine();
 
-                Console.Write("\nDo you want to add another contact? (Y/N): ");
-                string choice = Console.ReadLine().ToUpper();
+                        Console.Write("Enter Email: ");
+                        contact.Email = Console.ReadLine();
 
-                if (choice != "Y")
-                    addMore = false;
+                        addressBook.AddContact(contact);
+                        Console.WriteLine("Contact added successfully.");
+
+                        Console.Write("Add another contact? (Y/N): ");
+                        if (Console.ReadLine().ToUpper() != "Y")
+                            addMoreContacts = false;
+                    }
+                }
+
+                Console.Write("\nAdd another Address Book? (Y/N): ");
+                if (Console.ReadLine().ToUpper() != "Y")
+                    addMoreBooks = false;
             }
 
-            // UC3: Edit Contact
-            Console.Write("\nEnter First Name to Edit: ");
-            string editFirstName = Console.ReadLine();
-
-            Console.Write("Enter Last Name to Edit: ");
-            string editLastName = Console.ReadLine();
-
-            addressBook.EditContact(editFirstName, editLastName);
-
-            // UC4: Delete Contact
-            Console.Write("\nEnter First Name to Delete: ");
-            string deleteFirstName = Console.ReadLine();
-
-            Console.Write("Enter Last Name to Delete: ");
-            string deleteLastName = Console.ReadLine();
-
-            addressBook.DeleteContact(deleteFirstName, deleteLastName);
-
-            Console.WriteLine("\nThank you for using Address Book!");
+            Console.WriteLine("\nProgram Ended.");
         }
     }
 }
