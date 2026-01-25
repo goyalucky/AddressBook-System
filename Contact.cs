@@ -1,9 +1,8 @@
-
 using System;
 
 namespace AddressBookSystem
 {
-    // Model class representing a Contact Person
+    // Model class for representing a Contact Person
     public class Contact
     {
         public string FirstName { get; set; }
