@@ -67,5 +67,11 @@ namespace AddressBookSystem
             }
             Console.WriteLine("Contact not found.");
         }
+
+        // UC8: Expose contact list
+        public List<Contact> GetContacts()
+        {
+            return contacts;
+        }
     }
 }
