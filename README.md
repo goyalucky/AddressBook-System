@@ -73,5 +73,5 @@ Advanced sorting features to organize entries based on City, State, or Zip code.
 ---
 
 ## 👤 Author
-**Lucky Goyal** 
-B.Tech CSE(Artificial Intelligence and Machine Learning)
+**Lucky Goyal**  
+B.Tech CSE (Artificial Intelligence and Machine Learning)
