@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq; // Added for sorting logic
 
 namespace AddressBookSystem
 {
@@ -19,6 +20,20 @@ namespace AddressBookSystem
             contacts.Add(contact);
             Console.WriteLine("Contact added successfully.");
             return true;
+        }
+
+        // UC11: Ability to sort the entries in the address book alphabetically by Person’s name
+        public void SortByName()
+        {
+            // Use Collection Library for Sorting
+            contacts = contacts.OrderBy(c => c.FirstName).ThenBy(c => c.LastName).ToList();
+            Console.WriteLine("\nAddress Book sorted alphabetically by name.");
+            
+            // Print Person Entry in Console using overridden toString method
+            foreach (var contact in contacts)
+            {
+                Console.WriteLine(contact.ToString());
+            }
         }
 
         // UC3: Edit Contact
@@ -61,7 +76,7 @@ namespace AddressBookSystem
             }
         }
 
-        // UC8 & UC9: Expose contact list for searching and dictionary mapping
+        // UC8 & UC9: Expose contact list
         public List<Contact> GetContacts()
         {
             return contacts;
