@@ -14,6 +14,12 @@ namespace AddressBookSystem
         public string Phone     { get; set; }
         public string Email     { get; set; }
 
+        // UC11: Override toString method to finally Print Person Entry in Console
+        public override string ToString()
+        {
+            return $"Name: {FirstName} {LastName}, Address: {Address}, City: {City}, State: {State}, Zip: {Zip}, Phone: {Phone}, Email: {Email}";
+        }
+
         // UC7: Override Equals to check duplicate by Name
         public override bool Equals(object obj)
         {
@@ -24,6 +30,7 @@ namespace AddressBookSystem
             return this.FirstName.Equals(other.FirstName, StringComparison.OrdinalIgnoreCase)
                 && this.LastName.Equals(other.LastName, StringComparison.OrdinalIgnoreCase);
         }
+
         public override int GetHashCode()
         {
             return (FirstName + LastName).ToLower().GetHashCode();
