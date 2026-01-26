@@ -28,8 +28,34 @@ namespace AddressBookSystem
             // Use Collection Library for Sorting
             contacts = contacts.OrderBy(c => c.FirstName).ThenBy(c => c.LastName).ToList();
             Console.WriteLine("\nAddress Book sorted alphabetically by name.");
-            
-            // Print Person Entry in Console using overridden toString method
+            DisplaySortedContacts();
+        }
+
+        // UC 12: Write functions to sort person by City, State or Zip
+        public void SortByCity()
+        {
+            contacts = contacts.OrderBy(c => c.City).ToList();
+            Console.WriteLine("\nAddress Book sorted by City.");
+            DisplaySortedContacts();
+        }
+
+        public void SortByState()
+        {
+            contacts = contacts.OrderBy(c => c.State).ToList();
+            Console.WriteLine("\nAddress Book sorted by State.");
+            DisplaySortedContacts();
+        }
+
+        public void SortByZip()
+        {
+            contacts = contacts.OrderBy(c => c.Zip).ToList();
+            Console.WriteLine("\nAddress Book sorted by Zip.");
+            DisplaySortedContacts();
+        }
+
+        // Helper to Print Person Entry in Console using overridden toString method
+        private void DisplaySortedContacts()
+        {
             foreach (var contact in contacts)
             {
                 Console.WriteLine(contact.ToString());
