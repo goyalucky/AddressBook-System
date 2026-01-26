@@ -93,15 +93,34 @@ namespace AddressBookSystem
             Console.WriteLine("\n--- UC 10: Count by City or State ---");
             DisplayCountByLocation();
 
-            // UC 11: Sorting Logic
-            Console.WriteLine("UC 11: Sort Entries by Name");
-            Console.Write("Do you want to view sorted Address Books? (Y/N): ");
-            if (Console.ReadLine().ToUpper() == "Y")
+            // UC 11 & UC 12: Sorting Logic
+            Console.WriteLine("\n--- Sorting Logic ---");
+            Console.WriteLine("Choose sorting criteria:\n1. Name (UC 11)\n2. City (UC 12)\n3. State (UC 12)\n4. Zip (UC 12)\n5. Skip");
+            string sortChoice = Console.ReadLine();
+
+            if (sortChoice != "5")
             {
                 foreach (var entry in addressBookMap)
                 {
                     Console.WriteLine($"\nAddress Book: {entry.Key}");
-                    entry.Value.SortByName();
+                    switch (sortChoice)
+                    {
+                        case "1":
+                            entry.Value.SortByName();
+                            break;
+                        case "2":
+                            entry.Value.SortByCity();
+                            break;
+                        case "3":
+                            entry.Value.SortByState();
+                            break;
+                        case "4":
+                            entry.Value.SortByZip();
+                            break;
+                        default:
+                            Console.WriteLine("Invalid choice.");
+                            break;
+                    }
                 }
             }
 
